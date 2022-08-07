@@ -1,68 +1,52 @@
 class SortedList {
   constructor() {
-    this.items = []
-    this.length = 0
+    this.items = [],
+    this.length = []
   }
   add(item) {
-    this.items.push(item)
-    this.items.sort((a, b) => a - b)
-    this.length = this.items.length
+    var newitem = this.items;
+    newitem.push(item);
+    newitem.sort((a,b) => a>b ? 1 : -1)
+    this.items = newitem;
+    this.length = this.items.length;
   }
-  get(i) {
-    if (this.items.indexOf(i) == -1) {
-      throw new Error('OutOfBounds')
+  get(pos) {
+    if(pos>this.length-1){
+      throw new Error('OutOfBounds');
     }
-    else {
-      return(this.items.indexOf(i))
+    else{
+      return this.items[pos];
     }
   }
   max() {
-    if(this.items.length>0)
-    {
-      return (Math.max(...this.items))
+    if(this.length==0){
+      throw new Error('EmptySortedList');
     }
     else{
-      throw new Error("EmptySortedList ")
+      return Math.max(...this.items);
     }
   }
   min() {
-    if (this.items.length > 0) {
-      return (Math.min(...this.items))
+    if(this.length==0){
+      throw new Error('EmptySortedList');
     }
-    else {
-      throw new Error("EmptySortedList ")
+    else{
+      return Math.min(...this.items);
     }
   }
   avg() {
-    if (this.items.length > 0) {
-      let sum = this.sum()
-      return sum/this.items.length
-      }
-    else {
-      throw new Error("EmptySortedList ")
+    if(this.length==0){
+      throw new Error('EmptySortedList');
     }
+    return this.sum()/this.length;   
   }
 
   sum() {
-    if (this.items.length > 0) {
-     return this.items.reduce((acc, val) =>  acc + val)
-    }
-    else{
-      return 0
-    }
+    var sum = this.items.reduce((total, val) => {
+      return total+val
+    }, 0)
+    return sum
   }
-
 };
-
-let Sortedlist = new SortedList();
-Sortedlist.add(70)
-Sortedlist.add(60)
-Sortedlist.add(50)
-Sortedlist.add(40)
-console.log(Sortedlist.add(30));
-console.log(Sortedlist.sum());
-console.log(Sortedlist.get(30));
-console.log(Sortedlist.max());
-console.log(Sortedlist.min());
 
 module.exports = SortedList;
